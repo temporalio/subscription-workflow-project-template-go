@@ -40,7 +40,7 @@ func main() {
 		workflowOptions := client.StartWorkflowOptions{
 			ID:                 "SubscriptionsWorkflow" + cust.Id,
 			TaskQueue:          "SubscriptionsTaskQueueGo",
-			WorkflowRunTimeout: time.Minute * 5,
+			WorkflowRunTimeout: time.Minute * 10,
 		}
 
 		we, err := c.ExecuteWorkflow(context.Background(), workflowOptions, subscription.SubscriptionWorkflow, cust)
