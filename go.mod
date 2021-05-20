@@ -1,5 +1,5 @@
-module subscription-workflow-project-template-go/app
+module subscription-workfow
 
-go 1.14
+go 1.16
 
-require go.temporal.io/sdk v1.5.0 // indirect
+require go.temporal.io/sdk v1.6.0
