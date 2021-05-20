@@ -16,7 +16,7 @@ func main() {
 	}
 	defer c.Close()
 
-	// create workflow instance for 5 customers
+	// Query all workflows to get current billing information
 	for i := 0; i < 5; i++ {
 		bpnresp, err := c.QueryWorkflow(context.Background(),
 			"SubscriptionsWorkflowId-"+strconv.Itoa(i), "", "billingperiodnumber")

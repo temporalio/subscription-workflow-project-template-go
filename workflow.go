@@ -46,6 +46,10 @@ func SubscriptionWorkflow(ctx workflow.Context, customer Customer) (string, erro
 	}
 	// end defining query handlers
 
+	// Define signal channels
+	//workflow.GetSignalChannel(ctx, "billingperiodcharge").
+	//	Receive(ctx, &workflowCustomer.Subscription.BillingPeriodCharge)
+
 	ao := workflow.ActivityOptions{
 		StartToCloseTimeout: time.Minute * 5,
 	}
