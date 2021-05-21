@@ -4,7 +4,7 @@ Temporal customer subscription Workflow example.
 
 ### Setup
 
-#### Run Temporal server
+### Run Temporal server
 
 ```bash
 git clone https://github.com/temporalio/docker-compose.git
@@ -12,7 +12,7 @@ cd docker-compose
 docker-compose up
 ```
 
-#### Start the example
+### Start the example
 
 Start the Worker:
 
@@ -35,7 +35,7 @@ Id-4
 go run starter/main.go
 ```
 
-##### Querying billing information:
+### Querying billing information:
 
 You can query billing information for all customers after the workflows have started with:
 
@@ -48,7 +48,7 @@ This will return the current Billing Period and the current Billing Period Charg
 You can run this multiple times to see the billing period number increase during 
 workflow execution
 
-##### Update billing cycle cost:
+### Update billing cycle cost:
 
 You can also update the billing cycle cost for all customers while the workflow is running:
 
@@ -65,3 +65,15 @@ go run querybillinginfo/main.go
 ``` 
 
 again to see the billing charge update to 300 for the next billing period
+
+### Cancel subscription
+
+You can cancel subscriptions for all customers, which completes 
+workflow execution after the currently executing billing period:
+
+```text
+go run cancelsubscription/main.go
+```
+
+After running this, check out the Temporal Web UI and see that all 
+subscription workflows are in the "Completed" status.

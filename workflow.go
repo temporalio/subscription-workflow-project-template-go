@@ -47,13 +47,23 @@ func SubscriptionWorkflow(ctx workflow.Context, customer Customer) (string, erro
 	// end defining query handlers
 
 	// Define signal channels
-	selector := workflow.NewSelector(ctx)
+	// 1) billing period charge change signal
+	chargeSelector := workflow.NewSelector(ctx)
 	signalCh := workflow.GetSignalChannel(ctx, "billingperiodcharge")
-	selector.AddReceive(signalCh, func(ch workflow.ReceiveChannel, _ bool) {
+	chargeSelector.AddReceive(signalCh, func(ch workflow.ReceiveChannel, _ bool) {
 		var chargeSignal int
 		ch.Receive(ctx, &chargeSignal)
 		workflowCustomer.Subscription.BillingPeriodCharge = chargeSignal
 	})
+	// 2) cancel subscription signal
+	cancelSelector := workflow.NewSelector(ctx)
+	cancelCh := workflow.GetSignalChannel(ctx, "cancelsubscription")
+	cancelSelector.AddReceive(cancelCh, func(ch workflow.ReceiveChannel, _ bool) {
+		var cancelSubSignal bool
+		ch.Receive(ctx, &cancelSubSignal)
+		subscriptionCancelled = cancelSubSignal
+	})
+	// end defining signal channels
 
 	ao := workflow.ActivityOptions{
 		StartToCloseTimeout: time.Minute * 5,
@@ -106,6 +116,9 @@ func SubscriptionWorkflow(ctx workflow.Context, customer Customer) (string, erro
 		})
 
 		// If customer cancelled their subscription send notification email
+		for cancelSelector.HasPending() {
+			cancelSelector.Select(ctx)
+		}
 		if subscriptionCancelled {
 			err = workflow.ExecuteActivity(ctx, activities.SendCancellationEmailDuringActiveSubscription, workflowCustomer).Get(ctx, &actResult)
 			if err != nil {
@@ -116,8 +129,8 @@ func SubscriptionWorkflow(ctx workflow.Context, customer Customer) (string, erro
 
 		billingPeriodNum++
 
-		for selector.HasPending() {
-			selector.Select(ctx)
+		for chargeSelector.HasPending() {
+			chargeSelector.Select(ctx)
 		}
 	}
 
