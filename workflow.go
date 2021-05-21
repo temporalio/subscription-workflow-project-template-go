@@ -47,8 +47,13 @@ func SubscriptionWorkflow(ctx workflow.Context, customer Customer) (string, erro
 	// end defining query handlers
 
 	// Define signal channels
-	//workflow.GetSignalChannel(ctx, "billingperiodcharge").
-	//	Receive(ctx, &workflowCustomer.Subscription.BillingPeriodCharge)
+	selector := workflow.NewSelector(ctx)
+	signalCh := workflow.GetSignalChannel(ctx, "billingperiodcharge")
+	selector.AddReceive(signalCh, func(ch workflow.ReceiveChannel, _ bool) {
+		var chargeSignal int
+		ch.Receive(ctx, &chargeSignal)
+		workflowCustomer.Subscription.BillingPeriodCharge = chargeSignal
+	})
 
 	ao := workflow.ActivityOptions{
 		StartToCloseTimeout: time.Minute * 5,
@@ -110,6 +115,10 @@ func SubscriptionWorkflow(ctx workflow.Context, customer Customer) (string, erro
 		}
 
 		billingPeriodNum++
+
+		for selector.HasPending() {
+			selector.Select(ctx)
+		}
 	}
 
 	// if we get here the subscription period is over

@@ -42,7 +42,26 @@ You can query billing information for all customers after the workflows have sta
 ```text
 go run querybillinginfo/main.go    
 ```
+
 This will return the current Billing Period and the current Billing Period Charge amount for each of the customers.
 
 You can run this multiple times to see the billing period number increase during 
 workflow execution
+
+##### Update billing cycle cost:
+
+You can also update the billing cycle cost for all customers while the workflow is running:
+
+```text
+go run updatechargeamount/main.go
+```
+
+This will update the billing charge amount for all customers for their next billing cycle to 300.
+
+You can use 
+
+```text
+go run querybillinginfo/main.go    
+``` 
+
+again to see the billing charge update to 300 for the next billing period
