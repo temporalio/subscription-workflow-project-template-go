@@ -1,3 +1,4 @@
+// @@@SNIPSTART subscription-go-updatechargeamount-signal
 package main
 
 import (
@@ -25,3 +26,4 @@ func main() {
 		}
 	}
 }
+// @@@SNIPEND

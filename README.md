@@ -1,6 +1,7 @@
+<!-- @@@SNIPSTART subscription-go-readme -->
 # Temporal Subscription Workflow Template - Go
 
-Temporal customer subscription Workflow example. 
+Temporal customer subscription Workflow example.
 
 ### Setup
 
@@ -45,7 +46,7 @@ go run querybillinginfo/main.go
 
 This will return the current Billing Period and the current Billing Period Charge amount for each of the customers.
 
-You can run this multiple times to see the billing period number increase during 
+You can run this multiple times to see the billing period number increase during
 workflow execution
 
 ### Update billing cycle cost:
@@ -58,22 +59,23 @@ go run updatechargeamount/main.go
 
 This will update the billing charge amount for all customers for their next billing cycle to 300.
 
-You can use 
+You can use
 
 ```text
 go run querybillinginfo/main.go    
-``` 
+```
 
 again to see the billing charge update to 300 for the next billing period
 
 ### Cancel subscription
 
-You can cancel subscriptions for all customers, which completes 
+You can cancel subscriptions for all customers, which completes
 workflow execution after the currently executing billing period:
 
 ```text
 go run cancelsubscription/main.go
 ```
 
-After running this, check out the Temporal Web UI and see that all 
+After running this, check out the Temporal Web UI and see that all
 subscription workflows are in the "Completed" status.
+<!-- @@@@SNIPEND -->

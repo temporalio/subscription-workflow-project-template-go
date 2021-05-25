@@ -1,3 +1,4 @@
+// @@@SNIPSTART subscription-go-worker-start
 package main
 
 import (
@@ -10,7 +11,7 @@ import (
 )
 
 func main() {
-	// The client and worker are heavyweight objects that should be created once per process.
+	// The client and Worker are heavyweight objects that should be created once per process.
 	c, err := client.NewClient(client.Options{})
 	if err != nil {
 		log.Fatalln("Unable to create client", err)
@@ -27,3 +28,4 @@ func main() {
 		log.Fatalln("Unable to start worker", err)
 	}
 }
+// @@@SNIPEND

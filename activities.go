@@ -1,3 +1,4 @@
+// @@@SNIPSTART subscription-go-activities
 package subscription
 
 import (
@@ -33,3 +34,4 @@ func (a *Activities) SendSubscriptionOverEmail(ctx context.Context, customer Cus
 	activity.GetLogger(ctx).Info("sending subscription over email to: ", customer.Id)
 	return "Sending subscription over email completed for: " + customer.Id, nil
 }
+// @@@SNIPEND

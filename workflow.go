@@ -1,3 +1,4 @@
+// @@@SNIPSTART subscription-go-workflow-definition
 package subscription
 
 import (
@@ -145,3 +146,4 @@ func SubscriptionWorkflow(ctx workflow.Context, customer Customer) (string, erro
 
 	return "Completed Subscription Workflow", err
 }
+// @@@SNIPEND
