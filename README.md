@@ -1,11 +1,11 @@
 <!-- @@@SNIPSTART subscription-go-readme -->
-# Temporal Subscription Workflow Template - Go
+# Temporal Subscription Workflow Template in Go
 
-Temporal customer subscription Workflow example.
+This project template illustrates the design pattern for subscription style business logic.
 
-### Setup
+## Setup
 
-### Run Temporal server
+Run the Temporal Server:
 
 ```bash
 git clone https://github.com/temporalio/docker-compose.git
@@ -13,16 +13,21 @@ cd docker-compose
 docker-compose up
 ```
 
-### Start the example
+## Start
 
 Start the Worker:
 
-```text
+```bash
 go run worker/main.go
 ```
 
-Start the Workflow executions.
-This will start the Subscription Workflow for 5 customers with ids:
+Start the Workflow Executions:
+
+```bash
+go run starter/main.go
+```
+
+This will start the Workflow Executions for 5 customers with the following Ids:
 
 ```text
 Id-0
@@ -32,50 +37,32 @@ Id-3
 Id-4
 ```
 
-```text
-go run starter/main.go
-```
+## Get billing info
 
-### Querying billing information:
+You can Query the Workflow Executions and get the billing information for each customer.
 
-You can query billing information for all customers after the workflows have started with:
-
-```text
+```bash
 go run querybillinginfo/main.go    
 ```
 
-This will return the current Billing Period and the current Billing Period Charge amount for each of the customers.
+Run this multiple times to see the billing period number increase during the executions or see the billing cycle cost.
 
-You can run this multiple times to see the billing period number increase during
-workflow execution
+## Update billing
 
-### Update billing cycle cost:
-
-You can also update the billing cycle cost for all customers while the workflow is running:
+You can send a Signal a Workflow Execution to update the billing cycle cost to 300 for all customers.
 
 ```text
 go run updatechargeamount/main.go
 ```
 
-This will update the billing charge amount for all customers for their next billing cycle to 300.
+## Cancel subscription
 
-You can use
+You can send a Signal to all Workflow Executions to cancel the subscription for all customers.
+Workflow Executions will complete after the currently executing billing period.
 
-```text
-go run querybillinginfo/main.go    
-```
-
-again to see the billing charge update to 300 for the next billing period
-
-### Cancel subscription
-
-You can cancel subscriptions for all customers, which completes
-workflow execution after the currently executing billing period:
-
-```text
+```bash
 go run cancelsubscription/main.go
 ```
 
-After running this, check out the Temporal Web UI and see that all
-subscription workflows are in the "Completed" status.
+After running this, check out the [Temporal Web UI](localhost://8088) and see that all subscription Workflow Executions have a "Completed" status.
 <!-- @@@@SNIPEND -->
