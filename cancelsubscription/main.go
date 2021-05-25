@@ -1,3 +1,4 @@
+// @@@SNIPSTART subscription-go-cancel-subscription-signal
 package main
 
 import (
@@ -16,7 +17,7 @@ func main() {
 	}
 	defer c.Close()
 
-	// Signal all workflows and cancel the subscription
+	// Signal all Workflow Executions and cancel the subscription
 	for i := 0; i < 5; i++ {
 		err = c.SignalWorkflow(context.Background(),
 			"SubscriptionsWorkflowId-"+strconv.Itoa(i), "", "cancelsubscription", true)
@@ -25,3 +26,4 @@ func main() {
 		}
 	}
 }
+// @@@SNIPEND

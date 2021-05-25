@@ -1,3 +1,4 @@
+// @@@SNIPSTART subscription-go-subscription-struct
 package subscription
 
 import "time"
@@ -8,3 +9,4 @@ type Subscription struct {
 	MaxBillingPeriods   int
 	BillingPeriodCharge int
 }
+// @@@SNIPEND

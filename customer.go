@@ -1,3 +1,4 @@
+// @@@SNIPSTART subscription-go-customer-struct
 package subscription
 
 type Customer struct {
@@ -7,3 +8,4 @@ type Customer struct {
 	Email        string
 	Subscription Subscription
 }
+// @@@SNIPEND

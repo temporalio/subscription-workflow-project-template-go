@@ -1,3 +1,4 @@
+// @@@SNIPSTART subscription-go-querybillinginfo-query
 package main
 
 import (
@@ -16,7 +17,7 @@ func main() {
 	}
 	defer c.Close()
 
-	// Query all workflows to get current billing information
+	// Query all Workflow Executions to get current billing information
 	for i := 0; i < 5; i++ {
 		bpnresp, err := c.QueryWorkflow(context.Background(),
 			"SubscriptionsWorkflowId-"+strconv.Itoa(i), "", "billingperiodnumber")
@@ -43,3 +44,4 @@ func main() {
 		log.Println("Billing Results", "Billing Period Charge", result2)
 	}
 }
+// @@@SNIPEND

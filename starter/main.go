@@ -1,3 +1,4 @@
+// @@@SNIPSTART subscription-go-workflow-execution-starter
 package main
 
 import (
@@ -27,7 +28,7 @@ func main() {
 			BillingPeriodCharge: 120,
 		}
 
-	// create workflow instance for 5 customers
+	// create Workflow Execution for 5 customers
 	for i := 0; i < 5; i++ {
 		cust := subscription.Customer{
 			FirstName:    "First Name" + strconv.Itoa(i),
@@ -52,3 +53,4 @@ func main() {
 
 	}
 }
+// @@@SNIPEND
