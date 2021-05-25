@@ -1,9 +1,8 @@
-<!-- @@@SNIPSTART subscription-go-readme -->
 # Temporal Subscription Workflow Template in Go
-
+<!-- @@@SNIPSTART subscription-go-readme -->
 This project template illustrates the design pattern for subscription style business logic.
 
-## Setup
+**Setup**
 
 Run the Temporal Server:
 
@@ -13,7 +12,7 @@ cd docker-compose
 docker-compose up
 ```
 
-## Start
+**Start**
 
 Start the Worker:
 
@@ -37,7 +36,7 @@ Id-3
 Id-4
 ```
 
-## Get billing info
+**Get billing info**
 
 You can Query the Workflow Executions and get the billing information for each customer.
 
@@ -47,15 +46,15 @@ go run querybillinginfo/main.go
 
 Run this multiple times to see the billing period number increase during the executions or see the billing cycle cost.
 
-## Update billing
+**Update billing**
 
 You can send a Signal a Workflow Execution to update the billing cycle cost to 300 for all customers.
 
-```text
+```bash
 go run updatechargeamount/main.go
 ```
 
-## Cancel subscription
+**Cancel subscription**
 
 You can send a Signal to all Workflow Executions to cancel the subscription for all customers.
 Workflow Executions will complete after the currently executing billing period.
