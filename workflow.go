@@ -112,14 +112,8 @@ func SubscriptionWorkflow(ctx workflow.Context, customer Customer) (string, erro
 		}
 		// Wait 1 billing period to charge customer or if they cancel subscription
 		// whichever comes first
-		workflow.AwaitWithTimeout(ctx, workflowCustomer.Subscription.BillingPeriod, func() bool {
-			return subscriptionCancelled
-		})
+		workflow.AwaitWithTimeout(ctx, workflowCustomer.Subscription.BillingPeriod, cancelSelector.HasPending)
 
-		// If customer cancelled their subscription send notification email
-		for cancelSelector.HasPending() {
-			cancelSelector.Select(ctx)
-		}
 		if subscriptionCancelled {
 			err = workflow.ExecuteActivity(ctx, activities.SendCancellationEmailDuringActiveSubscription, workflowCustomer).Get(ctx, &actResult)
 			if err != nil {
