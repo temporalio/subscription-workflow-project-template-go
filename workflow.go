@@ -16,7 +16,7 @@ func SubscriptionWorkflow(ctx workflow.Context, customer Customer) (string, erro
 
 	QueryCustomerIdName := "customerid"
 	QueryBillingPeriodNumberName := "billingperiodnumber"
-	QueryBillingPeriodChargeAmountName := "billingperiodchargeamount"
+	QueryBillingPeriodChargeAmount := "billingperiodchargeamount"
 
 	logger := workflow.GetLogger(ctx)
 
@@ -38,11 +38,11 @@ func SubscriptionWorkflow(ctx workflow.Context, customer Customer) (string, erro
 		return "Error", err
 	}
 
-	err = workflow.SetQueryHandler(ctx, QueryBillingPeriodChargeAmountName, func() (int, error) {
+	err = workflow.SetQueryHandler(ctx, QueryBillingPeriodChargeAmount, func() (int, error) {
 		return workflowCustomer.Subscription.BillingPeriodCharge, nil
 	})
 	if err != nil {
-		logger.Info("QueryBillingPeriodChargeAmountName handler failed.", "Error", err)
+		logger.Info("QueryBillingPeriodChargeAmount handler failed.", "Error", err)
 		return "Error", err
 	}
 	// end defining query handlers
